@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<todo version="0.1.20">
+    <note priority="medium" time="1480373387">
+        positioning camera base on faces locations
+    </note>
+    <note priority="medium" time="1480373397">
+        relative moves of the camera
+    </note>
+    <note priority="medium" time="1480373416">
+        limits of the camera moves angles (absolute values)
+    </note>
+</todo>
