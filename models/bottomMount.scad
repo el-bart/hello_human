@@ -40,7 +40,12 @@ module bottomMount()
 
 
 bottomMount();
+
 %translate([-71, -13.5, 21])
   rotate([0,90,0])
     rotate([0,0,90])
       servo();
+
+%translate([10, -10, -44])
+  rotate([0,0,90])
+    servo();
