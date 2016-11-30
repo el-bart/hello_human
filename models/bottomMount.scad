@@ -1,5 +1,6 @@
 use <servo.scad>
 use <servoMountLock.scad>
+use <cammera.scad>
 
 module bottomMount()
 {
@@ -44,20 +45,24 @@ module bottomMount()
 bottomMount();
 
 %translate([-71, -13.5, 21])
+{
   rotate([0,90,0])
     rotate([0,0,90])
     {
       servo();
-      %translate([13/2+3.5, 20/2, 36+3.2])
+      translate([13/2+3.5, 20/2, 36+3.2])
         rotate([0, 0, 90])
           servoMountLock();
     }
+  translate([50, 10, -7])
+    cammera();
+}
 
 %translate([10, -10, -44])
   rotate([0,0,90])
   {
     servo();
-    %translate([13/2+3.5, 20/2, 36+3.2])
+    translate([13/2+3.5, 20/2, 36+3.2])
       rotate([0, 0, 90])
         servoMountLock();
   }
