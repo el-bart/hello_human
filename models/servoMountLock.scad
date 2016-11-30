@@ -16,7 +16,7 @@ module servoMountLock()
     translate([-(10+1)/2, -(10+1)/2, 4.5-(3.5+0.5)])
       cube([10+1, 10+1, 3.5+0.5]);
     translate([0, 0, -1])
-      cylinder(r=(9+1)/2, h=6, $fs=0.0);
+      cylinder(r=(9+1)/2, h=6, $fs=1);
   }
 }
 
