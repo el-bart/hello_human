@@ -1,15 +1,24 @@
 <?xml version="1.0"?>
 <todo version="0.1.20">
-    <note priority="high" time="1480373347">
+    <note priority="high" time="1480373347" done="1480531044">
         servo mount element model
+        <comment>
+            done
+        </comment>
     </note>
-    <note priority="medium" time="1480373278">
+    <note priority="medium" time="1480373278" done="1480531051">
         camera template
+        <comment>
+            added
+        </comment>
     </note>
     <note priority="medium" time="1480373297">
         tilt camera mount
     </note>
     <note priority="medium" time="1480373316">
         surface mount with pan motor holder
+    </note>
+    <note priority="verylow" time="1480531033">
+        add an all.scad file, that containes all the elements, required to be printed
     </note>
 </todo>
