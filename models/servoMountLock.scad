@@ -1,5 +1,6 @@
 module servoMountLock()
 {
+  space=[0.5, 0.5, 0.5];
   difference()
   {
     translate([-14-5, -10-10, 0])
@@ -12,11 +13,11 @@ module servoMountLock()
     translate([0, 0, 1])
     {
       // main rod mounting hole
-      translate([-(7.5+1)/2, -(30+1)/2, 4.5-(2+0.5)])
-        cube([7.5+1, 30+1, 2+0.5]);
+      translate([-(7.5+space[0])/2, -(30+space[1])/2, 4.5-(2+space[2])])
+        cube([7.5, 30, 2] + space);
       // center, thicker part
-      translate([-(10+1)/2, -(10+1)/2, 4.5-(3.5+0.5)])
-        cube([10+1, 10+1, 3.5+0.5]);
+      translate([-(10+space[0])/2, -(10+space[1])/2, 4.5-(3.5+space[2])])
+        cube([10, 10, 3.5] + space);
     }
     // servo's screw space
     translate([0, 0, -1])
