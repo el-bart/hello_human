@@ -1,3 +1,5 @@
+use <servoMountLock.scad>
+
 module servo()
 {
   cube([40, 20, 36]);
@@ -33,3 +35,7 @@ module servo()
 }
 
 servo();
+
+%translate([13/2+3.5, 20/2, 36+3.2])
+  rotate([0, 0, 90])
+    servoMountLock();
