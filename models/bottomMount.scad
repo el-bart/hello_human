@@ -2,6 +2,7 @@ use <servo.scad>
 use <servoMountLock.scad>
 use <cammera.scad>
 use <tiltMountBase.scad>
+use <cameraFrame.scad>
 
 module bottomMount()
 {
@@ -56,7 +57,16 @@ bottomMount();
           servoMountLock();
     }
   translate([50, 10, -7])
-    cammera();
+  {
+    translate([13, 0, 0])
+      cammera();
+    translate([-1, 2, -6])
+      rotate([90, 0, 0])
+        cameraFrame();
+    translate([70-1, -5, -6])
+      rotate([90, 0, 180])
+        cameraFrame();
+  }
   translate([44, 10, 10])
     rotate([0, 90, 0])
       tiltMountBase();
