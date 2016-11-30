@@ -2,6 +2,7 @@ use <servo.scad>
 
 module bottomMount()
 {
+  // base
   difference()
   {
     // main board
