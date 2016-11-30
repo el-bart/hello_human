@@ -12,11 +12,17 @@
             added
         </comment>
     </note>
-    <note priority="medium" time="1480373297">
+    <note priority="medium" time="1480373297" done="1480535963">
         tilt camera mount
+        <comment>
+            done
+        </comment>
     </note>
-    <note priority="medium" time="1480373316">
+    <note priority="medium" time="1480373316" done="1480535966">
         surface mount with pan motor holder
+        <comment>
+            done
+        </comment>
     </note>
     <note priority="verylow" time="1480531033">
         add an all.scad file, that containes all the elements, required to be printed
