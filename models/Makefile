@@ -1,6 +1,9 @@
 .SECONDARY:
 
-SCADS  := bottomMount.scad servoMountLock.scad
+SCADS  += bottomMount.scad
+SCADS  += servoMountLock.scad
+SCADS  += tiltMountBase.scad
+SCADS  += cameraFrame.scad
 STLS   := $(wildcard *.stl) $(SCADS:.scad=.stl)
 GCODES := $(STLS:.stl=.gcode)
 CONFIG := $(wildcard *.ini)
