@@ -24,7 +24,10 @@
             done
         </comment>
     </note>
-    <note priority="verylow" time="1480531033">
+    <note priority="verylow" time="1480531033" done="1480536474">
         add an all.scad file, that containes all the elements, required to be printed
+        <comment>
+            done
+        </comment>
     </note>
 </todo>
