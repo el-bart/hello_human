@@ -1,6 +1,6 @@
 .SECONDARY:
 
-SCADS  := $(wildcard *.scad)
+SCADS  := bottomMount.scad servoMountLock.scad
 STLS   := $(wildcard *.stl) $(SCADS:.scad=.stl)
 GCODES := $(STLS:.stl=.gcode)
 CONFIG := $(wildcard *.ini)
