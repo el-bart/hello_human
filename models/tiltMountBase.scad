@@ -31,5 +31,6 @@ module tiltMountBase()
 
 tiltMountBase();
 
-%rotate([180, 0, 0])
-  servoMountLock();
+%translate([0, 0, -0.5])
+  rotate([180, 0, 0])
+    servoMountLock();

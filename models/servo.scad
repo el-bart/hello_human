@@ -36,6 +36,6 @@ module servo()
 
 servo();
 
-%translate([13/2+3.5, 20/2, 36+3.2])
+%translate([13/2+3.5, 20/2, 36+3.2-0.5])
   rotate([0, 0, 90])
     servoMountLock();
