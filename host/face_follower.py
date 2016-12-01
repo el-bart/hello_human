@@ -40,7 +40,6 @@ while True:
         errors = 0
 
     except Exception as ex:
-        raise                       
         errors += 1
         sys.stderr.write('!')
         sys.stderr.write( "\n" + sys.argv[0] + ": ERROR: " + str(ex) + "\n" )
