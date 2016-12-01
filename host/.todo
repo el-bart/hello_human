@@ -18,4 +18,13 @@
             done
         </comment>
     </note>
+    <note priority="veryhigh" time="1480627741">
+        adde checksums for positions settings
+    </note>
+    <note priority="low" time="1480627731">
+        adde waving hand :)
+    </note>
+    <note priority="verylow" time="1480627762">
+        maybe face recognition would be nice?
+    </note>
 </todo>
