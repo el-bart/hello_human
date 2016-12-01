@@ -199,6 +199,7 @@ bool CommProtocol::execute(const uint8_t srvNo, const char mode, const uint8_t p
          posTab[srvNo]=tmp;
          return true;
 
+    /*
     case 'l':   // set minimum value
          if(tmp>pMax)
            tmp=pMax;
@@ -219,6 +220,7 @@ bool CommProtocol::execute(const uint8_t srvNo, const char mode, const uint8_t p
              tmp=pMax;
          settings_.posDef().write(srvNo, tmp);
          return true;
+    */
   } // switch(mode)
 
   // unknown mode...
