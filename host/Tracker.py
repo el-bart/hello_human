@@ -23,9 +23,7 @@ class Tracker:
             return
         p, t = self.__findNewROI(faces, center)
         if self.__alreadyCentered(p,t, center):
-            #print "\nalready centered"              
             return
-        #print "\nNOT centered"              
         dp, dt = self.__positionToMotionOffset(center, p, t)
         self.__updatePosition(dp, dt)
         self.__silentPeriodEnd = now + self.__inactivity
@@ -35,7 +33,6 @@ class Tracker:
         if face is None:
             return center
         (x,y,w,h) = face
-        #print "\n " + str(x) + " ; " + str(y) + " (" + str(center) + ")\n"                    
         return (x+w/2, y+h/2)
 
     def __findBiggestFace(self, faces):
@@ -55,7 +52,6 @@ class Tracker:
         dx = center[0] - p
         dy = center[1] - t
         distance = math.sqrt( dx*dx + dy*dy )
-        #print( "dist: " + str(distance) )                   
         return distance <= self.__centeredRange
 
     def __positionToMotionOffset(self, center, p, t):
@@ -67,18 +63,18 @@ class Tracker:
         self.__setPosition( self.__pan + dp, self.__tilt + dt )
 
     def __setPosition(self, pan, tilt):
-        print("\nsetting: \t" + str(pan) + " ; \t" + str(tilt) )             
-        #return                              
-        self.__pan  = self.__normalizePan(pan)
-        self.__tilt = self.__normalizeTilt(tilt)
-        self.__pos.set(self.__pan, -1*self.__tilt)
+        #print("\nsetting: \t" + str(pan) + " ; \t" + str(tilt) )             
+        pp = self.__normalizePan(pan)
+        pt = self.__normalizeTilt(tilt)
+        self.__pos.set(pp, -1*pt)
+        self.__pan  = pp
+        self.__tilt = pt
 
     def __normalizePan(self, pan):
-        # TODO: verify
-        if pan > 0.9:
-            return 0.9
-        if pan < -0.9:
-            return -0.9
+        if pan > 0.8:
+            return 0.8
+        if pan < -0.8:
+            return -0.8
         return pan
 
     def __normalizeTilt(self, tilt):
