@@ -4,7 +4,7 @@ import serial
 
 
 class LineDriver:
-    def __init__(self, dev, timeout = 0.500):
+    def __init__(self, dev, timeout = 0.100):
         self._io = serial.Serial(port=dev, baudrate=38400, timeout=0)
         if not self._io.isOpen():
             raise Expception("cannot open serial port: " + dev)
