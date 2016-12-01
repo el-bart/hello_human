@@ -20,6 +20,9 @@ tracker  = Tracker.Tracker(position)
 faceDetector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 frameGrabber = cv2.VideoCapture(0)
 
+cv2.namedWindow("preview", cv2.WND_PROP_FULLSCREEN)
+cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+
 ret    = 0
 errors = 0
 
@@ -33,7 +36,7 @@ while True:
         center   = imageCenter(img)
         faces    = faceDetector.detectMultiScale(gray, 1.3, 5)
         drawRectangles(faces, img)
-        cv2.imshow('Video', img)
+        cv2.imshow("preview",img)
 
         tracker.updatePositionForFaces(faces, center)
         sys.stderr.write('#')
