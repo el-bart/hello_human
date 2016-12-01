@@ -40,10 +40,23 @@ class Position:
         self.__set(self._tiltLine, tilt)
 
     def __set(self, axis, value):
-        self._line.sendCmd( axis + 's' + self.__value2hex(value) + '?' )
+        cmd = axis + 's' + self.__value2hex(value)
+        cmd = cmd + self.__checksum2str( self.__checksum(cmd) )
+        self._line.sendCmd(cmd)
         resp = self._line.readResponse()
         if resp != axis + "-ok":
             raise Exception("error response from servo controler: " + resp)
+
+    def __checksum(self, cmd):
+        out = 0x00
+        for c in cmd:
+            out ^= ord(c)
+        lb = out & 0x0f
+        hb = (out & 0xf0) >> 4
+        return lb^hb
+
+    def __checksum2str(self, cs):
+        return "%x" % int(cs)
 
     def __value2hex(self, value):
         if value < -1.0 or 1.0 < value:

@@ -18,8 +18,11 @@
             done
         </comment>
     </note>
-    <note priority="veryhigh" time="1480627741">
+    <note priority="veryhigh" time="1480627741" done="1480628382">
         adde checksums for positions settings
+        <comment>
+            added
+        </comment>
     </note>
     <note priority="low" time="1480627731">
         adde waving hand :)
