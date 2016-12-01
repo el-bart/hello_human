@@ -4,6 +4,7 @@ SCADS  += bottomMount.scad
 SCADS  += servoMountLock.scad
 SCADS  += tiltMountBase.scad
 SCADS  += cameraFrame.scad
+SCADS  += base.scad
 SCADS  += all.scad
 STLS   := $(wildcard *.stl) $(SCADS:.scad=.stl)
 GCODES := $(STLS:.stl=.gcode)
