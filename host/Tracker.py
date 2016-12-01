@@ -35,6 +35,7 @@ class Tracker:
 
     def __moveToDefaultPosition(self):
         self.__setPosition(0.0, -0.2)
+        self.__lastFace = time.time()
 
     def __findNewROI(self, faces, center):
         face = self.__findBiggestFace(faces)
