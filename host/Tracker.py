@@ -7,31 +7,40 @@ class Tracker:
     def __init__(self, pos):
         self.__pos  = pos
         self.__pan  = 0.0
-        self.__tilt = -0.2
+        self.__tilt = 0.0
         self.__silentPeriodEnd = time.time()
+        self.__lastFace        = time.time()
         # some "constants" (read: hardcodes)
         self.__inactivity = 0.21            # give some time for camera to steady, after each move
         self.__centeredRange = 10           # that many pixels between ROI and an image center is considered "ok"
         self.__panPix2OffCoef  = 0.1/160    # how mux pan-servo should move per 1 pixel change
         self.__tiltPix2OffCoef = 0.1/160    # how mux tilt-servo should move per 1 pixel change
-        # setup some initial positions
-        self.__setPosition(self.__pan, self.__tilt)
+        self.__backToStartAfterNoFaces = 7  # timeout for no faces, before returning to a default position
+        # and finally... ;)
+        self.__moveToDefaultPosition()
 
     def updatePositionForFaces(self, faces, center):
         now = time.time()
         if now < self.__silentPeriodEnd:
             return
         p, t = self.__findNewROI(faces, center)
+        if self.__tooLongWithoutFaces():
+            self.__moveToDefaultPosition()
+            return
         if self.__alreadyCentered(p,t, center):
             return
         dp, dt = self.__positionToMotionOffset(center, p, t)
         self.__updatePosition(dp, dt)
         self.__silentPeriodEnd = now + self.__inactivity
 
+    def __moveToDefaultPosition(self):
+        self.__setPosition(0.0, -0.2)
+
     def __findNewROI(self, faces, center):
         face = self.__findBiggestFace(faces)
         if face is None:
             return center
+        self.__lastFace = time.time()
         (x,y,w,h) = face
         return (x+w/2, y+h/2)
 
@@ -47,6 +56,9 @@ class Tracker:
     def __faceSize(self, face):
         x,y,w,h = face
         return w*h
+
+    def __tooLongWithoutFaces(self):
+        return self.__lastFace + self.__backToStartAfterNoFaces < time.time()
 
     def __alreadyCentered(self, p,t, center):
         dx = center[0] - p
