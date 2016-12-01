@@ -10,9 +10,11 @@ class Tracker:
         self.__tilt = 0.0
         self.__silentPeriodEnd = time.time()
         # some "constants" (read: hardcodes)
-        self.__inactivity = 0.35    # give some time for camera to steady, after each move
-        self.__centeredRange = 150  # that many pixels between ROI and an image center is considered "ok"
-        # TODO...
+        self.__inactivity = 0.35            # give some time for camera to steady, after each move
+        self.__centeredRange = 50           # that many pixels between ROI and an image center is considered "ok"
+        self.__panPix2OffCoef  = 0.1/160    # how mux pan-servo should move per 1 pixel change
+        self.__tiltPix2OffCoef = 0.1/160    # how mux tilt-servo should move per 1 pixel change
+        # setup some initial positions
         self.__setPosition(self.__pan, self.__tilt)
 
     def updatePositionForFaces(self, faces, center):
@@ -53,18 +55,20 @@ class Tracker:
         dx = center[0] - p
         dy = center[1] - t
         distance = math.sqrt( dx*dx + dy*dy )
-        print( "dist: " + str(distance) )
+        #print( "dist: " + str(distance) )                   
         return distance <= self.__centeredRange
 
     def __positionToMotionOffset(self, center, p, t):
-        # TODO: translate position on the image, to servo offset
-        return (0.0, 0.0)
+        dpPix = p - center[0]
+        dtPix = t - center[1]
+        return (dpPix*self.__panPix2OffCoef, dtPix*self.__tiltPix2OffCoef)
 
     def __updatePosition(self, dp, dt):
         self.__setPosition( self.__pan + dp, self.__tilt + dt )
 
     def __setPosition(self, pan, tilt):
-        return                              
+        print("\nsetting: \t" + str(pan) + " ; \t" + str(tilt) )             
+        #return                              
         self.__pan  = self.__normalizePan(pan)
         self.__tilt = self.__normalizeTilt(tilt)
         self.__pos.set(self.__pan, self.__tilt)
