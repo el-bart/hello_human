@@ -46,8 +46,8 @@ class Position:
             raise Exception("error response from servo controler: " + resp)
 
     def __value2hex(self, value):
-        if value < -1 or 1 < value:
+        if value < -1.0 or 1.0 < value:
             raise Exception("value '" + str(value) + "' out of [-1; +1] range")
-        norm = (value+1)/2*255;
+        norm = (value+1.0)/2 * 255;
         i    = int( round(norm, 0) )
         return "%0.2x" % i
