@@ -7,10 +7,10 @@ class Tracker:
     def __init__(self, pos):
         self.__pos  = pos
         self.__pan  = 0.0
-        self.__tilt = 0.0
+        self.__tilt = -0.2
         self.__silentPeriodEnd = time.time()
         # some "constants" (read: hardcodes)
-        self.__inactivity = 0.35            # give some time for camera to steady, after each move
+        self.__inactivity = 0.21            # give some time for camera to steady, after each move
         self.__centeredRange = 50           # that many pixels between ROI and an image center is considered "ok"
         self.__panPix2OffCoef  = 0.1/160    # how mux pan-servo should move per 1 pixel change
         self.__tiltPix2OffCoef = 0.1/160    # how mux tilt-servo should move per 1 pixel change
@@ -19,7 +19,7 @@ class Tracker:
 
     def updatePositionForFaces(self, faces, center):
         now = time.time()
-        if self.__silentPeriodEnd > now:
+        if now < self.__silentPeriodEnd:
             return
         p, t = self.__findNewROI(faces, center)
         if self.__alreadyCentered(p,t, center):
@@ -71,7 +71,7 @@ class Tracker:
         #return                              
         self.__pan  = self.__normalizePan(pan)
         self.__tilt = self.__normalizeTilt(tilt)
-        self.__pos.set(self.__pan, self.__tilt)
+        self.__pos.set(self.__pan, -1*self.__tilt)
 
     def __normalizePan(self, pan):
         # TODO: verify
@@ -82,9 +82,8 @@ class Tracker:
         return pan
 
     def __normalizeTilt(self, tilt):
-        # TODO: verify
-        if tilt > 0.4:
-            return 0.4
-        if tilt < -0.2:
-            return -0.2
+        if tilt > 0.1:
+            return 0.1
+        if tilt < -0.4:
+            return -0.4
         return tilt
