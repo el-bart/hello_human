@@ -63,7 +63,6 @@ class Tracker:
         self.__setPosition( self.__pan + dp, self.__tilt + dt )
 
     def __setPosition(self, pan, tilt):
-        #print("\nsetting: \t" + str(pan) + " ; \t" + str(tilt) )             
         pp = self.__normalizePan(pan)
         pt = self.__normalizeTilt(tilt)
         self.__pos.set(pp, -1*pt)
