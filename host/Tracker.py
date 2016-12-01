@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import math
 import time
 import serial
 
@@ -10,7 +11,7 @@ class Tracker:
         self.__silentPeriodEnd = time.time()
         # some "constants" (read: hardcodes)
         self.__inactivity = 0.35    # give some time for camera to steady, after each move
-        self.__centeredRange = 50   # that many pixels between ROI and an image center is considered "ok"
+        self.__centeredRange = 150  # that many pixels between ROI and an image center is considered "ok"
         # TODO...
         self.__setPosition(self.__pan, self.__tilt)
 
@@ -18,7 +19,11 @@ class Tracker:
         now = time.time()
         if self.__silentPeriodEnd > now:
             return
-        p,   t = self.__findNewROI(faces, center)
+        p, t = self.__findNewROI(faces, center)
+        if self.__alreadyCentered(p,t, center):
+            #print "\nalready centered"              
+            return
+        #print "\nNOT centered"              
         dp, dt = self.__positionToMotionOffset(center, p, t)
         self.__updatePosition(dp, dt)
         self.__silentPeriodEnd = now + self.__inactivity
@@ -28,13 +33,13 @@ class Tracker:
         if face is None:
             return center
         (x,y,w,h) = face
-        print "\n " + str(x) + " ; " + str(y) + "\n"                    
+        #print "\n " + str(x) + " ; " + str(y) + " (" + str(center) + ")\n"                    
         return (x+w/2, y+h/2)
 
     def __findBiggestFace(self, faces):
         if len(faces) < 1:
             return None
-        out = None
+        out = faces[0]
         for (x,y,w,h) in faces:
             if out is None or self.__faceSize((x,y,w,h)) > self.__faceSize(out):
                 out = (x,y,w,h)
@@ -44,6 +49,12 @@ class Tracker:
         x,y,w,h = face
         return w*h
 
+    def __alreadyCentered(self, p,t, center):
+        dx = center[0] - p
+        dy = center[1] - t
+        distance = math.sqrt( dx*dx + dy*dy )
+        print( "dist: " + str(distance) )
+        return distance <= self.__centeredRange
 
     def __positionToMotionOffset(self, center, p, t):
         # TODO: translate position on the image, to servo offset
