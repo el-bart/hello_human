@@ -9,7 +9,7 @@ def drawRectangles(faces, img):
         cv2.rectangle(img, (x,y), (x+w,y+h), (0,0xff,0), 6)
 
 def imageCenter(img):
-    w,h, channels = img.shape
+    h,w,channels = img.shape
     return (w/2, h/2)
 
 lineDrv  = Servo.LineDriver('/dev/ttyUSB0')
