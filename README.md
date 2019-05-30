@@ -2,8 +2,8 @@
 
 ![hardware construct](hardware_photo.jpg)
 
-small hackaton to show ppl what programming is... in real life. :)
-it's more about end effect that code (quality) itself.
+small hackaton to show ppl what programming is... doing stuff in real life. :)
+it's more about the end effect than the code (quality) itself.
 
 project is about making a 3d-printed box for usb-cam, that tracks faces it sees.
 
