@@ -107,14 +107,17 @@ test: TARGET:=test
 test:
 	@$(run-in-gen)
 
+#AVR_PROG_TYPE:=stk500v2
+AVR_PROG_TYPE:=usbasp
+
 .PHONY: flash_mcu
 flash_mcu:
 	@[ -n "$(PROFILE)" ] || { echo "profile MUST be set" ; exit 1 ; }
 	@[ -f "gen/$(PROFILE)/$(BIN_FILE)" ] || { echo "file to flash must exist" ; exit 2 ; }
 	# flash program
-	avrdude -P avrdoper -c stk500v2 -p $(MCU_PROG) -U flash:w:gen/$(PROFILE)/$(BIN_FILE)
+	avrdude -P avrdoper -c $(AVR_PROG_TYPE) -p $(MCU_PROG) -U flash:w:gen/$(PROFILE)/$(BIN_FILE)
 	# setup fuse bits
-	avrdude -P avrdoper -c stk500v2 -p $(MCU_PROG) -U lfuse:w:$(LOW_FUSE):m -U hfuse:w:$(HIGH_FUSE):m
+	avrdude -P avrdoper -c $(AVR_PROG_TYPE) -p $(MCU_PROG) -U lfuse:w:$(LOW_FUSE):m -U hfuse:w:$(HIGH_FUSE):m
 
 .PHONY: clean
 clean:
