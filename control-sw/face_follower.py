@@ -21,7 +21,7 @@ faceDetector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 frameGrabber = cv2.VideoCapture(0)
 
 cv2.namedWindow("preview", cv2.WND_PROP_FULLSCREEN)
-cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
 
 ret    = 0
 errors = 0
