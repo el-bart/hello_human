@@ -7,11 +7,16 @@ VIDEO=$1
 SERIAL=$2
 shift 2
 
-if ! git describe --exact-match --tags > /dev/null 2>&1
+if [ -z "$TAG" ]
 then
-  TAG="latest"
+  if ! git describe --exact-match --tags > /dev/null 2>&1
+  then
+    TAG="latest"
+  else
+    TAG=$(git describe --exact-match --tags | tr ' ' '\n' | head -1)
+  fi
 else
-  TAG=$(git describe --exact-match --tags | tr ' ' '\n' | head -1)
+  echo "$0: TAG is already explicitly set to '$TAG' - using this one, then"
 fi
 
 [ -z "$DISPLAY" ] || xhost "+si:localuser:$USER"
@@ -26,4 +31,4 @@ docker run \
   --group-add "$(getent group video | cut -d: -f3)" \
   --device "$SERIAL" \
   --group-add "$(getent group dialout | cut -d: -f3)" \
-  "baszerr/hello_human:$TAG" "$@"
+  "baszerr/hello_human:$TAG" --video "$VIDEO" --serial "$SERIAL" "$@"

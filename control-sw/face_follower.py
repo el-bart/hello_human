@@ -8,13 +8,15 @@ import Tracker
 
 
 def parseCmdLine():
-    opts, args = getopt.getopt(sys.argv[1:], "hpn", ["help", "preview", "no-preview"])
+    opts, args = getopt.getopt(sys.argv[1:], "hpns:v:", ["help", "preview", "no-preview", "serial=", "video="])
     if len(args) > 0:
         raise Exception("unknown argument: '" + args[0] + "'")
     preview = None
+    serialDevice = None
+    videoDevice = None
     for opt, arg in opts:
         if opt == "-h" or opt == "--help":
-            sys.stdout.write(sys.argv[0] + " {--help|--preview|--no-preview}\n")
+            sys.stdout.write(sys.argv[0] + " --video /dev/videoX --serial /dev/ttyUSBY {--help|--preview|--no-preview}\n")
             sys.exit(0)
         if opt == "-p" or opt == "--preview":
             preview = True
@@ -22,9 +24,19 @@ def parseCmdLine():
         if opt == "-n" or opt == "--no-preview":
             preview = False
             continue
+        if opt == "-s" or opt == "--serial":
+            serialDevice = arg
+            continue
+        if opt == "-v" or opt == "--video":
+            videoDevice = arg
+            continue
     if preview is None:
-        raise Exception("preview must be xplicitly enabled or disabled")
-    return preview
+        raise Exception("preview must be explicitly enabled or disabled")
+    if serialDevice is None:
+        raise Exception("serial device name must be xplicitly provided")
+    if videoDevice is None:
+        raise Exception("video device name must be xplicitly provided")
+    return preview, serialDevice, videoDevice
 
 
 def drawRectangles(faces, img):
@@ -35,16 +47,16 @@ def imageCenter(img):
     h,w,channels = img.shape
     return (w/2, h/2)
 
-previewWindow = parseCmdLine()
+previewWindow, serialDevice, videoDevice = parseCmdLine()
 
-lineDrv = Servo.LineDriver('/dev/ttyUSB0')
+lineDrv = Servo.LineDriver(serialDevice)
 position = Servo.Position(lineDrv, 'l', 'f')
 tracker = Tracker.Tracker(position)
 fullscreen = False
 
 
 faceDetector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-frameGrabber = cv2.VideoCapture(0)
+frameGrabber = cv2.VideoCapture( int(videoDevice[-1]) )
 
 if previewWindow:
     if fullscreen:
