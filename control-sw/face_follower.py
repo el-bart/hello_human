@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import sys
 import cv2
+import time
 import Servo
 import Tracker
 
@@ -25,9 +26,19 @@ cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLS
 
 ret    = 0
 errors = 0
+frameCount = 0
+lastFpsPrint = time.time();
 
 while True:
     try:
+        frameCount += 1
+        if frameCount > 20:
+            now = time.time()
+            timeElapsed = now - lastFpsPrint
+            sys.stderr.write('\nFPS=' + str(frameCount / float(timeElapsed)) + '\n')
+            frameCount = 0
+            lastFpsPrint = now
+
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
