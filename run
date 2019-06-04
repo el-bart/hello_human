@@ -1,12 +1,20 @@
 #!/bin/bash -ex
-VIDEO=$(ls /dev/video? | head -1)
-SERIAL=$(ls /dev/ttyUSB? | head -1)
+if [ $# -lt 2 ]
+then
+  echo "$0 </dev/videoX> </dev/ttyUSBY> [args for script]" >&2
+fi
+VIDEO=$1
+SERIAL=$2
+shift 2
+
 if ! git describe --exact-match --tags > /dev/null 2>&1
 then
   TAG="latest"
 else
   TAG=$(git describe --exact-match --tags | tr ' ' '\n' | head -1)
 fi
+
+[ -z "$DISPLAY" ] || xhost "+si:localuser:$USER"
 
 docker run \
   -it --rm \
