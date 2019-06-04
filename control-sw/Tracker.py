@@ -13,8 +13,8 @@ class Tracker:
         # some "constants" (read: hardcodes)
         self.__inactivity = 0.21            # give some time for camera to steady, after each move
         self.__centeredRange = 10           # that many pixels between ROI and an image center is considered "ok"
-        self.__panPix2OffCoef  = 0.1/160    # how mux pan-servo should move per 1 pixel change
-        self.__tiltPix2OffCoef = 0.1/160    # how mux tilt-servo should move per 1 pixel change
+        self.__panPix2OffCoef  = 0.05/160    # how mux pan-servo should move per 1 pixel change
+        self.__tiltPix2OffCoef = 0.05/160    # how mux tilt-servo should move per 1 pixel change
         self.__backToStartAfterNoFaces = 7  # timeout for no faces, before returning to a default position
         # and finally... ;)
         self.__moveToDefaultPosition()
@@ -78,7 +78,16 @@ class Tracker:
     def __setPosition(self, pan, tilt):
         pp = self.__normalizePan(pan)
         pt = self.__normalizeTilt(tilt)
-        self.__pos.set(pp, -1*pt)
+        retries = 3
+        while True:
+            try:
+                self.__pos.set(pp, -1*pt)
+                break
+            except:
+                retries -= 1
+                if retries == 0:
+                    raise
+
         self.__pan  = pp
         self.__tilt = pt
 
