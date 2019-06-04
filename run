@@ -12,4 +12,4 @@ docker run \
   --group-add "$(getent group video | cut -d: -f3)" \
   --device "$SERIAL" \
   --group-add "$(getent group dialout | cut -d: -f3)" \
-  baszerr/hello_human "$@"
+  "baszerr/hello_human:v1.1.1" "$@"
