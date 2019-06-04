@@ -1,0 +1,19 @@
+#!/bin/bash -ex
+APP_DIR=$(dirname "$(readlink -e "$0")")
+
+VIDEO=$(ls /dev/video? | head -1)
+SERIAL=$(ls /dev/ttyUSB? | head -1)
+#IDS="$(id -u):$(id -g)"
+IDS="0:0"
+SRC="$APP_DIR/control-sw"
+
+docker run \
+  -it --rm \
+  -u "$IDS" \
+  -p 10022:22 \
+  --device "$VIDEO" \
+  --group-add "$(getent group video | cut -d: -f3)" \
+  --device "$SERIAL" \
+  -v "$SRC:/mnt/prj:ro" \
+  --group-add "$(getent group dialout | cut -d: -f3)" \
+  hello-human
