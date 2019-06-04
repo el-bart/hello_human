@@ -1,6 +1,12 @@
 #!/bin/bash -ex
 VIDEO=$(ls /dev/video? | head -1)
 SERIAL=$(ls /dev/ttyUSB? | head -1)
+if ! git describe --exact-match --tags > /dev/null 2>&1
+then
+  TAG="latest"
+else
+  TAG=$(git describe --exact-match --tags | tr ' ' '\n' | head -1)
+fi
 
 docker run \
   -it --rm \
@@ -12,4 +18,4 @@ docker run \
   --group-add "$(getent group video | cut -d: -f3)" \
   --device "$SERIAL" \
   --group-add "$(getent group dialout | cut -d: -f3)" \
-  "baszerr/hello_human:latest" "$@"
+  "baszerr/hello_human:$TAG" "$@"
