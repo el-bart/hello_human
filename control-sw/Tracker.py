@@ -11,10 +11,10 @@ class Tracker:
         self.__silentPeriodEnd = time.time()
         self.__lastFace        = time.time()
         # some "constants" (read: hardcodes)
-        self.__inactivity = 0.21            # give some time for camera to steady, after each move
-        self.__centeredRange = 10           # that many pixels between ROI and an image center is considered "ok"
-        self.__panPix2OffCoef  = 0.05/160    # how mux pan-servo should move per 1 pixel change
-        self.__tiltPix2OffCoef = 0.05/160    # how mux tilt-servo should move per 1 pixel change
+        self.__inactivity = 0.00            # give some time for camera to steady, after each move
+        self.__centeredRange = 20           # that many pixels between ROI and an image center is considered "ok"
+        self.__panPix2OffCoef  = 0.02/160    # how mux pan-servo should move per 1 pixel change
+        self.__tiltPix2OffCoef = 0.02/160    # how mux tilt-servo should move per 1 pixel change
         self.__backToStartAfterNoFaces = 7  # timeout for no faces, before returning to a default position
         # and finally... ;)
         self.__moveToDefaultPosition()
