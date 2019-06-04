@@ -56,7 +56,7 @@ while True:
     except Exception as ex:
         errors += 1
         sys.stderr.write('!')
-        #sys.stderr.write( "\n" + sys.argv[0] + ": ERROR: " + str(ex) + "\n" )
+        sys.stderr.write( "\n" + sys.argv[0] + ": ERROR: " + str(ex) + "\n" )
         if errors > 20:
             sys.stderr.write("\n" + sys.argv[0] + ": TOO MANY ERRORS IN A ROW - SHUTTING DOWN...\n")
             ret = 42
