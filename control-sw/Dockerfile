@@ -1,12 +1,12 @@
 FROM debian:stretch
 RUN apt-get update && apt-get upgrade -y
+
 RUN apt-get install -y python \
                        python-opencv \
                        python-serial
 
-RUN apt-get install -y openssh-server && \
-    mkdir -p /run/sshd && \
-    echo 'X11UseLocalhost no' >> /etc/ssh/sshd_config
-RUN mkdir -p /root/.ssh
-COPY authorized_keys /root/.ssh/
-ENTRYPOINT ["/usr/sbin/sshd", "-D"]
+RUN mkdir  /opt/face_follower
+COPY *.py  /opt/face_follower/
+COPY *.xml /opt/face_follower/
+WORKDIR    /opt/face_follower
+ENTRYPOINT ["./face_follower.py"]
