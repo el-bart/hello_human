@@ -37,17 +37,21 @@ def imageCenter(img):
 
 previewWindow = parseCmdLine()
 
-lineDrv  = Servo.LineDriver('/dev/ttyUSB0')
+lineDrv = Servo.LineDriver('/dev/ttyUSB0')
 position = Servo.Position(lineDrv, 'l', 'f')
-tracker  = Tracker.Tracker(position)
+tracker = Tracker.Tracker(position)
+fullscreen = False
 
 
 faceDetector = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 frameGrabber = cv2.VideoCapture(0)
 
 if previewWindow:
-    cv2.namedWindow("preview", cv2.WND_PROP_FULLSCREEN)
-    cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+    if fullscreen:
+        cv2.namedWindow("preview", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("preview", cv2.WND_PROP_FULLSCREEN, cv2.cv.CV_WINDOW_FULLSCREEN)
+    else:
+        cv2.namedWindow("preview", cv2.WINDOW_NORMAL)
 
 ret    = 0
 errors = 0
